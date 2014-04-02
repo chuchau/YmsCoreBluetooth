@@ -29,6 +29,10 @@ static DEACentralManager *sharedCentralManager;
 
 @implementation DEACentralManager
 
+/*
+ Set known peripheral names in nameList, and use initWithKnownPeripheralNames to help identify and filter the peripherals you care to communicate with.
+ */
+
 + (DEACentralManager *)initSharedServiceWithDelegate:(id)delegate {
     if (sharedCentralManager == nil) {
         dispatch_queue_t queue = dispatch_queue_create("com.yummymelon.deanna", 0);
@@ -62,8 +66,7 @@ static DEACentralManager *sharedCentralManager;
     // This prevents usage of serviceUUIDs array to filter on.
 
     /*
-     Note that in this implementation, handleFoundPeripheral: is implemented so that it can be used via block callback or as a
-     delagate handler method. This is an implementation specific decision to handle discovered and retrieved peripherals identically.
+     Note that in this implementation, handleFoundPeripheral: is implemented so that it can be used via block callback or as a delagate handler method. This is an implementation specific decision to handle discovered and retrieved peripherals identically.
 
      This may not always be the case, where for example information from advertisementData and the RSSI are to be factored in.
      */
@@ -87,6 +90,11 @@ static DEACentralManager *sharedCentralManager;
 #endif
 
 }
+
+
+/*An alternate implementation of startScan without using a block callback is to use scanForPeripheralsWithServices:options:.
+ In this case, you then must implement handleFoundPeripheral: to handle the discovered peripheral.
+*/
 
 - (void)handleFoundPeripheral:(CBPeripheral *)peripheral {
     YMSCBPeripheral *yp = [self findPeripheral:peripheral];
@@ -117,6 +125,19 @@ static DEACentralManager *sharedCentralManager;
 
 }
 
+
+/*
+ Define program behavior upon a change in the state of CBCentralManager
+ managerPoweredOnHandler
+ managerUnknownHandler
+ managerPoweredOffHandler
+ managerResettingHandler
+ managerUnauthorizedHandler
+ managerUnsupportedHandler
+ */
+
+
+//retrivieving previously discovered peripherals whose UUIDs have been persisted from a previous run of the app upon CBCentralManager being powered on:
 
 - (void)managerPoweredOnHandler {
     // TODO: Determine if peripheral retrieval works on stock Macs with BLE support.
