@@ -50,6 +50,10 @@
         DEAMagnetometerService *ms = [[DEAMagnetometerService alloc] initWithName:@"magnetometer" parent:self baseHi:hi baseLo:lo serviceOffset:kSensorTag_MAGNETOMETER_SERVICE];
         DEADeviceInfoService *ds = [[DEADeviceInfoService alloc] initWithName:@"devinfo" parent:self baseHi:0 baseLo:0 serviceOffset:kSensorTag_DEVINFO_SERV_UUID];
         
+        //ServiceOffSet: Add YMSCBCharacteristic instance given address offset.
+        
+        //The instances of these classes are stored in the dictionary [YMSCBPeripheral serviceDict] where their respective keys are human-readable strings.
+        
         self.serviceDict = @{@"temperature": ts,
                              @"accelerometer": as,
                              @"simplekeys": sks,
@@ -67,6 +71,7 @@
     // Watchdog aware method
     [self resetWatchdog];
     
+    // The tasks are accomplished via a nested chain of callbacks.
     [self connectWithOptions:nil withBlock:^(YMSCBPeripheral *yp, NSError *error) {
         if (error) {
             return;
@@ -86,6 +91,9 @@
                     [service discoverCharacteristics:[service characteristics] withBlock:^(NSDictionary *chDict, NSError *error) {
                         [thisService turnOn];
                     }];
+                    
+                    /*When the service is turned on using the method [DEABaseService turnOn], notifications for the “data” characteristic are turned on. Handling notification events sent from the SensorTag are handled by notifyCharacteristicHandler. The acceleration measurements are stored as NSNumber properties x, y, z. These properties can then be Key-Value Observed (KVO) by the application, typically to be displayed in user interface.
+                     */
                     
                 } else if ([service.name isEqualToString:@"devinfo"]) {
                     __weak DEADeviceInfoService *thisService = (DEADeviceInfoService *)service;

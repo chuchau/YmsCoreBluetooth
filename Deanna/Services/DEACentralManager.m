@@ -140,7 +140,7 @@ static DEACentralManager *sharedCentralManager;
 //retrivieving previously discovered peripherals whose UUIDs have been persisted from a previous run of the app upon CBCentralManager being powered on:
 
 - (void)managerPoweredOnHandler {
-    // TODO: Determine if peripheral retrieval works on stock Macs with BLE support.
+    // TODO: Determine if peripheral retrieval works on stock Macs with BLE support.  
     /* 
        Using iMac with Cirago BLE USB adapter, retreival with return a CBPeripheral instance without properties 
        correctly populated such as name. This behavior is not exhibited when running on iOS.
