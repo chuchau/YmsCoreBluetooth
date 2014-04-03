@@ -74,13 +74,16 @@
     }
     
     DEAAccelerometerService *as = (DEAAccelerometerService *)object;
-    
+
     if ([keyPath isEqualToString:@"x"]) {
         self.accelXLabel.stringValue = [NSString stringWithFormat:@"%0.2f", [as.x floatValue]];
     } else if ([keyPath isEqualToString:@"y"]) {
         self.accelYLabel.stringValue = [NSString stringWithFormat:@"%0.2f", [as.y floatValue]];
     } else if ([keyPath isEqualToString:@"z"]) {
         self.accelZLabel.stringValue = [NSString stringWithFormat:@"%0.2f", [as.z floatValue]];
+        NSString *AccData = [NSString stringWithFormat:@"AccX: %@, AccY: %@, AccZ: %@", self.accelXLabel.stringValue,self.accelYLabel.stringValue,self.accelZLabel.stringValue];
+        
+        NSLog(@"%@", AccData);
     } else if ([keyPath isEqualToString:@"isOn"]) {
         if (as.isOn) {
             [self.notifySwitch setState:NSOnState];
