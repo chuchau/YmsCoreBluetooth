@@ -16,6 +16,7 @@
 //  Author: Charles Y. Choi <charles.choi@yummymelon.com>
 //
 
+
 #import "DEAAccelerometerService.h"
 #import "YMSCBCharacteristic.h"
 
@@ -32,7 +33,7 @@ float calcAccel(int16_t rawV) {
 @property (nonatomic, strong) NSNumber *y;
 @property (nonatomic, strong) NSNumber *z;
 @property (nonatomic, strong) NSNumber *period;
-
+@property (nonatomic, strong) NSString *tag_id;
 @end
 
 
@@ -55,8 +56,33 @@ float calcAccel(int16_t rawV) {
         [self addCharacteristic:@"data" withOffset:kSensorTag_ACCELEROMETER_DATA];
         [self addCharacteristic:@"config" withOffset:kSensorTag_ACCELEROMETER_CONFIG];
         [self addCharacteristic:@"period" withOffset:kSensorTag_ACCELEROMETER_PERIOD];
+        [self addCharacteristic:@"tag_id" withAddress:kSensorTag_DEVINFO_SYSTEM_ID];
+        
     }
     return self;
+}
+
+- (void)readSystemID{
+    YMSCBCharacteristic *tag_idCt = self.characteristicDict[@"tag_id"];
+    __weak DEAAccelerometerService *this = self;
+    [tag_idCt readValueWithBlock:^(NSData *data, NSError *error) {
+        NSMutableString *tmpString = [NSMutableString stringWithFormat:@""];
+        unsigned char bytes[data.length];
+        [data getBytes:bytes];
+        for (int ii = (int)data.length; ii >= 0;ii--) {
+            [tmpString appendFormat:@"%02hhx",bytes[ii]];
+            if (ii) {
+                [tmpString appendFormat:@":"];
+            }
+        }
+        
+        NSLog(@"tag_id: %@", tmpString);
+        _YMS_PERFORM_ON_MAIN_THREAD(^{
+            this.tag_id = tmpString;
+        });
+        
+    }];
+
 }
 
 
@@ -123,7 +149,7 @@ float calcAccel(int16_t rawV) {
 {
     return @{ @"x": self.x,
               @"y": self.y,
-              @"z": self.z };
+              @"z": self.z};
 }
 
 @end

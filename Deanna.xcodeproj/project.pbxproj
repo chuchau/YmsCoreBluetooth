@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C24562618FED6F7002F1DAF /* DEACentralManager.h.ori in Resources */ = {isa = PBXBuildFile; fileRef = 2C24562518FED6F7002F1DAF /* DEACentralManager.h.ori */; };
+		2C24562818FED722002F1DAF /* DEACentralManager.m.ori in Sources */ = {isa = PBXBuildFile; fileRef = 2C24562718FED722002F1DAF /* DEACentralManager.m.ori */; };
 		D906E5F116DCAC55001D7932 /* DEACentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D906E5F016DCAC55001D7932 /* DEACentralManager.m */; };
 		D907A76B16E0393300EA8D5B /* DEABarometerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D907A76A16E0393300EA8D5B /* DEABarometerViewCell.m */; };
 		D90C0C3A16DD6297002D3FFD /* DEABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D90C0C3916DD6297002D3FFD /* DEABaseViewController.m */; };
@@ -114,6 +116,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C24562518FED6F7002F1DAF /* DEACentralManager.h.ori */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEACentralManager.h.ori; sourceTree = "<group>"; };
+		2C24562718FED722002F1DAF /* DEACentralManager.m.ori */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DEACentralManager.m.ori; sourceTree = "<group>"; };
 		D906E5EF16DCAC55001D7932 /* DEACentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEACentralManager.h; sourceTree = "<group>"; };
 		D906E5F016DCAC55001D7932 /* DEACentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DEACentralManager.m; sourceTree = "<group>"; };
 		D907A76916E0393300EA8D5B /* DEABarometerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DEABarometerViewCell.h; sourceTree = "<group>"; };
@@ -408,7 +412,9 @@
 			isa = PBXGroup;
 			children = (
 				D906E5EF16DCAC55001D7932 /* DEACentralManager.h */,
+				2C24562518FED6F7002F1DAF /* DEACentralManager.h.ori */,
 				D906E5F016DCAC55001D7932 /* DEACentralManager.m */,
+				2C24562718FED722002F1DAF /* DEACentralManager.m.ori */,
 				D9CB2C0616A71F8E00279DDA /* SensorTag */,
 			);
 			path = Services;
@@ -664,6 +670,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = DEA;
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Yummy Melon Software";
 			};
@@ -695,6 +702,7 @@
 				D9C5012316AB37DD001D4D4F /* DEAPeripheralsViewController.xib in Resources */,
 				D9F412F116DED0030094FEFA /* DEASensorTagViewController.xib in Resources */,
 				D9971AEA1720A9A100B1A068 /* DEAPeripheralTableViewCell.xib in Resources */,
+				2C24562618FED6F7002F1DAF /* DEACentralManager.h.ori in Resources */,
 				D9E012F71797D66400677FC1 /* Images.xcassets in Resources */,
 				D97EC6D2172B1B8C00CAECFC /* README.md in Resources */,
 				D92049D51742C836001380A6 /* CHANGES.md in Resources */,
@@ -777,6 +785,7 @@
 				D9960A54173B0A1B0013C8E7 /* DEADeviceInfoViewCell.m in Sources */,
 				D9812904173F3804008EA8D5 /* YMSCBStoredPeripherals.m in Sources */,
 				D9AA81C91753E00700C2836D /* YMSCBDescriptor.m in Sources */,
+				2C24562818FED722002F1DAF /* DEACentralManager.m.ori in Sources */,
 				D9D70095177782CB0066AB1B /* DEATheme.m in Sources */,
 				D9D70098177783DB0066AB1B /* DEADefaultTheme.m in Sources */,
 			);

@@ -98,7 +98,7 @@
                 } else if ([service.name isEqualToString:@"devinfo"]) {
                     __weak DEADeviceInfoService *thisService = (DEADeviceInfoService *)service;
                     [service discoverCharacteristics:[service characteristics] withBlock:^(NSDictionary *chDict, NSError *error) {
-                        [thisService readDeviceInfo];
+                        [thisService readDeviceInfo];                        
                     }];
                     
                 } else {

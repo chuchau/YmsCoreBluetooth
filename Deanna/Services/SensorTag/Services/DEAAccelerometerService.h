@@ -30,6 +30,8 @@
  */
 @property (nonatomic, readonly) NSDictionary *sensorValues;
 
+/// System ID
+@property (nonatomic, strong, readonly) NSString *tag_id;
 /// x value
 @property (nonatomic, strong, readonly) NSNumber *x;
 /// y value
@@ -51,5 +53,10 @@
  Read accelerometer period.
  */
 - (void)requestReadPeriod;
+
+/**
+ Read System ID
+ */
+- (void)readSystemID;
 
 @end

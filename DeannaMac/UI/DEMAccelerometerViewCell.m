@@ -20,14 +20,15 @@
 #import "DEMAccelerometerViewCell.h"
 #import "DEASensorTag.h"
 #import "DEAAccelerometerService.h"
-
+#import "DEADeviceInfoService.h"
+#import "YMSCBCharacteristic.h"
 
 @implementation DEMAccelerometerViewCell
 
 - (void)configureWithSensorTag:(DEASensorTag *)sensorTag {
     self.service = sensorTag.serviceDict[@"accelerometer"];
     
-    for (NSString *key in @[@"x", @"y", @"z", @"isOn", @"isEnabled", @"period"]) {
+    for (NSString *key in @[@"x", @"y", @"z", @"isOn", @"isEnabled", @"period", @"tag_id"]) {
         [self.service addObserver:self forKeyPath:key options:NSKeyValueObservingOptionNew context:NULL];
     }
     if (self.service.isOn) {
@@ -43,12 +44,13 @@
     DEAAccelerometerService *as = (DEAAccelerometerService *)self.service;
     if (as.isEnabled) {
         [as requestReadPeriod];
+        //[as readSystemID];
     }
-
+    
 }
 
 - (void)deconfigure {
-    for (NSString *key in @[@"x", @"y", @"z", @"isOn", @"isEnabled", @"period"]) {
+    for (NSString *key in @[@"x", @"y", @"z", @"isOn", @"isEnabled", @"period", @"tag_id"]) {
         [self.service removeObserver:self forKeyPath:key];
     }
 }
@@ -74,16 +76,26 @@
     }
     
     DEAAccelerometerService *as = (DEAAccelerometerService *)object;
-
+    //NSString *AccDataPath = @"/Users/yuanda/Development/Workspaces/12Parsecs/20140403.csv";
+   
+    
+    YMSCBService *sysService ;
+    DEADeviceInfoService *is = (DEADeviceInfoService *)sysService;
+    //YMSCBCharacteristic *system_id = is.characteristicDict[@"system_id"];
+    
+    //[is readDeviceInfo];
+    //NSString *sys_id = [self.service valueForKey:@"tag_id"];
+    NSString *sys_id = @"nullll";
+    
     if ([keyPath isEqualToString:@"x"]) {
         self.accelXLabel.stringValue = [NSString stringWithFormat:@"%0.2f", [as.x floatValue]];
     } else if ([keyPath isEqualToString:@"y"]) {
         self.accelYLabel.stringValue = [NSString stringWithFormat:@"%0.2f", [as.y floatValue]];
     } else if ([keyPath isEqualToString:@"z"]) {
         self.accelZLabel.stringValue = [NSString stringWithFormat:@"%0.2f", [as.z floatValue]];
-        NSString *AccData = [NSString stringWithFormat:@"AccX: %@, AccY: %@, AccZ: %@", self.accelXLabel.stringValue,self.accelYLabel.stringValue,self.accelZLabel.stringValue];
-        
-        NSLog(@"%@", AccData);
+        NSString *AccData = [NSString stringWithFormat:@"ID:%@,%@,%@,%@", sys_id,self.accelXLabel.stringValue,self.accelYLabel.stringValue,self.accelZLabel.stringValue];
+        NSLog(@"%@",AccData);
+        //[self appendText:AccData toFile:AccDataPath];
     } else if ([keyPath isEqualToString:@"isOn"]) {
         if (as.isOn) {
             [self.notifySwitch setState:NSOnState];
@@ -106,6 +118,43 @@
     }
 }
 
+
+- (void)appendText:(NSString *)text toFile:(NSString *)filePath {
+    
+    // NSFileHandle won't create the file for us, so we need to check to make sure it exists
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:filePath]) {
+        
+        // the file doesn't exist yet, so we can just write out the text using the
+        // NSString convenience method
+        
+        NSError *error = noErr;
+        BOOL success = [text writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+        if (!success) {
+            // handle the error
+            NSLog(@"%@", error);
+        }
+        
+    } else {
+        
+        // the file already exists, so we should append the text to the end
+		
+        // get a handle to the file
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
+		
+        // move to the end of the file
+        [fileHandle seekToEndOfFile];
+		
+        // convert the string to an NSData object
+        NSData *textData = [text dataUsingEncoding:NSUTF8StringEncoding];
+		
+        // write the data to the end of the file
+        [fileHandle writeData:textData];
+		NSLog(@"Writing data to CSV");
+        // clean up
+        [fileHandle closeFile];
+    }
+}
 
 
 @end
